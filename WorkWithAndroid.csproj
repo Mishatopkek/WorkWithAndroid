@@ -11,6 +11,7 @@
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
         <MtouchLink>SdkOnly</MtouchLink>
+        <Nullable>enable</Nullable>
 
         <!-- Display name -->
         <ApplicationTitle>WorkWithAndroid</ApplicationTitle>
@@ -52,5 +53,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
     </ItemGroup>
+
+
 
 </Project>

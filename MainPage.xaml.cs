@@ -1,56 +1,48 @@
 ﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using WorkWithAndroid.Services;
 
 namespace WorkWithAndroid;
 
 public partial class MainPage : ContentPage
 {
-    // int count = 0;
-
     public MainPage()
     {
         InitializeComponent();
     }
 
-    // private v/*oid OnCounterClicked(object sender, EventArgs e)
-    // {
-    //     count++;
-    //
-    //     if (count == 1)
-    //         CounterBtn.Text = $"Clicked {count} time";
-    //     else
-    //         CounterBtn.Text = $"Clicked {count} times";
-    //
-    //     SemanticScreenReader.Announce(CounterBtn.Text);
-    // }*/
-
     private async void OnKillProcess(object sender, EventArgs e)
     {
-        ProcessStartInfo startInfo = new()
-        {
-            FileName = "adb",
-            Arguments = "shell am kill-all",
-            CreateNoWindow = true,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-        };
-        Process proc = Process.Start(startInfo);
-        ArgumentNullException.ThrowIfNull(proc);
-        string output = await proc.StandardOutput.ReadToEndAsync();
-        await proc.WaitForExitAsync();
+        KillBtn.Text = "Working";
+        SemanticScreenReader.Announce(KillBtn.Text);
+
+        await AdbService.KillAllBackgroundApplications();
+
+        KillBtn.Text = "Kill 'em";
+        SemanticScreenReader.Announce(KillBtn.Text);
     }
-    private async void OnGetIpProcess(object sender, EventArgs e)
+
+    private async void OnSearchQuery(object sender, EventArgs e)
     {
-        ProcessStartInfo startInfo = new()
+        const string ipQuery = "my ip address";
+        GetIpBtn.Text = "Working";
+        SemanticScreenReader.Announce(GetIpBtn.Text);
+
+        await AdbService.InsertInChromeInput(SearchQuery.Text);
+
+        if (SearchQuery.Text.Trim().ToLower() == ipQuery)
         {
-            FileName = "adb",
-            Arguments = "shell am start -n com.android.chrome/com.google.android.apps.chrome.Main",
-            CreateNoWindow = true,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-        };
-        Process proc = Process.Start(startInfo);
-        ArgumentNullException.ThrowIfNull(proc);
-        // string output = await proc.StandardOutput.ReadToEndAsync();
-        await proc.WaitForExitAsync();
+            string? ip = await AdbService.GetAnIpFromChrome();
+            IpLabel.IsVisible = true;
+            IpLabel.Text = string.IsNullOrEmpty(ip) ?
+                "IP was not found" :
+                "Your IP address: " + ip;
+            SemanticScreenReader.Announce(IpLabel.Text);
+        }
+        GetIpBtn.Text = "Get it";
+        SemanticScreenReader.Announce(GetIpBtn.Text);
     }
 }

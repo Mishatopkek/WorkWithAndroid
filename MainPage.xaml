@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WorkWithAndroid.MainPage">
@@ -16,38 +17,81 @@
                 HorizontalOptions="Center" />
 
             <Label
+                x:Name="MainTitle"
                 Text="Work with your android"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
 
-            <Label
-                Text="Kill all background process"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Kill all background process in an android device"
-                FontSize="18"
-                HorizontalOptions="Center" />
 
-            <Button
-                x:Name="KillBtn"
-                Text="Kill 'em"
-                SemanticProperties.Hint="Kill all background process in an android device"
-                Clicked="OnKillProcess"
-                HorizontalOptions="Center" />
+            <HorizontalStackLayout
+                Spacing="25"
+                Padding="30,0"
+                HorizontalOptions="Center">
 
-            <Label
-                Text="Get an ip address"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Get an ip address from an android device"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                <VerticalStackLayout
+                    Spacing="25"
+                    Padding="30,0"
+                    VerticalOptions="Center">
 
-            <Button
-                x:Name="GetIpBtn"
-                Text="Get it"
-                SemanticProperties.Hint="Get an ip address from an android device"
-                Clicked="OnGetIpProcess"
-                HorizontalOptions="Center" />
+                    <Label
+                        Text="Close all recent apps"
+                        SemanticProperties.HeadingLevel="Level2"
+                        SemanticProperties.Description="Kill all background process in an android device"
+                        FontSize="18"
+                        HorizontalOptions="Center" />
+
+                    <Button
+                        x:Name="KillBtn"
+                        Text="Kill 'em"
+                        SemanticProperties.Hint="Kill all background process in an android device"
+                        Clicked="OnKillProcess"
+                        HorizontalOptions="Center" />
+
+                </VerticalStackLayout>
+
+                <BoxView
+                    WidthRequest="1"
+                    Color="Gray"
+                    MaximumHeightRequest="640" />
+
+                <VerticalStackLayout
+                    Spacing="25"
+                    Padding="30,0"
+                    VerticalOptions="Center">
+
+                    <Label
+                        Text="Search in Google"
+                        SemanticProperties.HeadingLevel="Level2"
+                        SemanticProperties.Description="Get an ip address from an android device"
+                        FontSize="18"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        x:Name="IpLabel"
+                        IsVisible="False"
+                        Text=""
+                        SemanticProperties.HeadingLevel="Level2"
+                        SemanticProperties.Description="Ip address"
+                        TextColor="Aqua"
+                        FontSize="12"
+                        HorizontalOptions="Center" />
+
+                    <Entry
+                        x:Name="SearchQuery"
+                        MinimumWidthRequest="240"
+                        SemanticProperties.Hint="It is data for chrome googling"
+                        Completed="OnSearchQuery"
+                        HorizontalOptions="Center" />
+
+                    <Button
+                        x:Name="GetIpBtn"
+                        Text="Get it"
+                        SemanticProperties.Hint="Get an ip address from an android device"
+                        Clicked="OnSearchQuery"
+                        HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>
